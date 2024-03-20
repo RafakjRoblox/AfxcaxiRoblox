@@ -1,0 +1,744 @@
+// https://discord.com/api/webhooks/1205305603787063407/KJYz0flSkJG-KO4EohfAhMHHVcQLQMQshhv9LE4RnZHce3TT2fph6vm7sAC_Yzv9kCxa
+ 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 1;
+
+noti_key = "n0 i d0nt h@v3"; // enter something... or no... (no?? next)
+console.log("Are YOU READY TO USING WEBHOOK? \nJoin Discord: https://discord.gg/QYwBbgD8rE");
+name_server = " - AFX Community"; // enter your server name :)
+invite_discord = " https://discord.gg/QYwBbgD8rE"; // Enter Your Link Invite Discord Or Error
+ping_role_id = {
+  boss: "",
+  sword: "",
+  mirage: "",
+  haki: {
+    normal: "",
+    legend: ""
+  },
+  fullmoon: "",
+  fruit_drop: "<@&" + ">",
+},
+noti_config = {
+  random_anime_picture: true,
+  boss: true,
+  sword: true,
+  mirage: true,
+  haki: {
+    normal: true,
+    legend: true,
+  },
+  fullmoon: true,
+  kitsune: true,
+  fruit_dropped: true,
+};
+
+// req: turn on for edit webhook or no = error
+webhook_config = {
+  boss: "https://discord.com/api/webhooks/1219866711592009828/OZ6BP-dWzxUgsnyMDZUNXuiHQK_HVXR7fS5eHBbpogc2xPw1z9nkIgFa_usc634h3FV8", // up r
+  sword: "https://discord.com/api/webhooks/1219866853191716945/2rVIVzoOes_H7Crsu_l9-_ZvHQ3Jc8cpaWpR5S1TUfFELjoPSlcXVWV5kpKXwckL4K2x", // up r
+  mirage: "https://discord.com/api/webhooks/1219866948528111617/u-pEVtZ3JXaYWZAtRpox4_QE365zFopS7V_LlE3mkagK6lCW2CokO-SuqEUwNLd3rLZy", // up r
+  haki: {
+    normal: "https://discord.com/api/webhooks/1219867072453148672/QMMAXwPtjDWWg2bQ7LPzlaf76oSWnVTAK20OQaL4cx1fbXy-FhivfBiPTTA8AMvkmaWe", // up r
+    legend: "https://discord.com/api/webhooks/1219867193873793054/axqpV5XAAyI9QZMhFqv3jZgwKmepgWeeCsQvKc3YKi7YFFx_lCLUosIjK5hDR8Ksw-Y8", // up r
+  },
+  fullmoon: "https://discord.com/api/webhooks/1219867301071814678/rS34L56WMPkNO7vYOJ3e9qaYKvrdm_FQovqGsnnFrOLl91LdZd0eUsXl76xi1JnfWTzM", // r
+  kitsune: "",
+  fruit_dropped: "https://discord.com/api/webhooks/1219868229967810610/KQKfzuzfF61pebU7d6yNoXC3j8VmnxBXEYXnwzUPP9N0FluLD_nzikPX-Ttg85HKS4an",
+};
+
+// obf here
+token = "";
+try {
+  require.resolve("discord.js-selfbot-v13");
+} catch (e) {
+  console.log("Please run: `npm install discord.js-selfbot-v13");
+  process.exit(0);
+}
+
+try {
+  require.resolve("discord.js");
+} catch (e) {
+  console.log("Please run: `npm install discord.js");
+  process.exit(0);
+}
+
+try {
+  require.resolve("axios");
+} catch (e) {
+  console.log("Please run: `npm install axios");
+  process.exit(0);
+}
+
+const { Client, Intents } = require("discord.js-selfbot-v13");
+const { WebhookClient, EmbedBuilder } = require("discord.js");
+const client = new Client({
+  intents: new Intents(7796),
+  partials: [
+    "USER",
+    "CHANNEL",
+    "GUILD_MEMBER",
+    "MESSAGE",
+    "REACTION",
+    "GUILD_SCHEDULED_EVENT",
+  ],
+  checkUpdate: false,
+});
+
+const anime = async function (e) {
+  e = e.toJSON();
+  if (!noti_config.random_anime_picture) {
+    return e;
+  }
+  const { data: sex_alumi_hubb } = await require("axios").get(
+    "https://api.waifu.pics/sfw/waifu",
+  );
+  e.content = noti_config.content;
+  e.image = { url: sex_alumi_hubb.url };
+  return e;
+};
+
+// dont edit some here ... pls
+const ownerID = "1178668706461646953"; // ignore = error
+avtOwner = "https://cdn.discordapp.com/attachments/1206609413469900841/1206615474700558387/sticker.png?ex=65dca73b&is=65ca323b&hm=79c2215fbdd60df0b715d8e1e64e75f43acd431b5988c0c3b28c92132c12b1ae&";
+nameOwner = "🐧Enverstツ";
+client.on("ready", async () => {
+  console.log(`Successfully: Code Started.`);
+  client.user.setStatus("invisible");
+  nameOwner = client.users.cache.get(ownerID).tag;
+});
+
+client.on("messageCreate", async (message) => {
+    const channel = message.channelId;
+    if (channel == "1173843954429612042" && noti_config.boss) {
+      // boss royx
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.boss });
+      webhook.send({
+        content: ping_role_id.boss,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                  "Boss Spawn" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                {
+                  name: "**[👺] __Boss Name:__**",
+                  value: data[0].value.replace("True Form", ""),
+                },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    }  else if (channel == "1191618756405903430" && noti_config.boss) {
+      // boss xero
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.boss });
+      webhook.send({
+        content: ping_role_id.boss,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                "Boss Spawn" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                {
+                  name: "**[👺] __Boss Name:__**",
+                  value: data[0].value.replace("True Form", ""),
+                },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1200201342526951546" && noti_config.boss) {
+      // boss skyland
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.boss });
+      webhook.send({
+        content: ping_role_id.boss,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                "Boss Spawn" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                {
+                  name: "**[👺] __Boss Name:__**",
+                  value: data[0].value.replace("True Form", ""),
+                },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1193938412806348941" && noti_config.sword) {
+      // sword Memories
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.sword });
+      webhook.send({
+        content: ping_role_id.sword,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                  "Sword Legend" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[⚔️] __Sword Name:__**", value: data[0].value },
+                { name: "**[🌊] __Sea World:__**", value: `\`\`\`2\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1173844018258526288" && noti_config.sword) {
+      // sword royx
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.sword });
+      webhook.send({
+        content: ping_role_id.sword,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                  "Sword Legend" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[⚔️] __Sword Name:__**", value: data[0].value },
+                { name: "**[🌊] __Sea World:__**", value: `\`\`\`2\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1195392642406686850" && noti_config.sword) {
+      // sword skyland
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.sword });
+      webhook.send({
+        content: ping_role_id.sword,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                  "Sword Legend" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[⚔️] __Sword Name:__**", value: data[0].value },
+                { name: "**[🌊] __Sea World:__**", value: `\`\`\`2\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1065645836987539547" && noti_config.mirage) {
+      // mirage royx
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.mirage });
+      webhook.send({
+        content: ping_role_id.mirage,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Mirage Island" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Mirage Spawn:__**", value: `\`\`\`✅\`\`\`` },
+                { name: "**[⏳] __Server Time:__**", value: data[0].value },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1192840172883161158" && noti_config.mirage) {
+      // mirage skyland
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.mirage });
+      webhook.send({
+        content: ping_role_id.mirage,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Mirage Island" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Mirage Spawn:__**", value: `\`\`\`✅\`\`\`` },
+                { name: "**[⏳] __Server Time:__**", value: data[1].value },
+                { name: "**[👤] __Players In Server:__**", value: data[2].value },
+                { name: "**[🔗] __Job ID:__**", value: data[3].value },
+                { name: "**[📜] __Script Join:__**", value: data[4].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1183431696515858483" && noti_config.mirage) {
+      // mirage vtien store
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.mirage });
+      webhook.send({
+        content: ping_role_id.mirage,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Mirage Island" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Mirage Spawn:__**", value: `\`\`\`✅\`\`\`` },
+                { name: "**[⏳] __Server Time:__**", value: data[1].value },
+                { name: "**[👤] __Players In Server:__**", value: data[2].value },
+                { name: "**[🔗] __Job ID:__**", value: data[3].value },
+                { name: "**[📜] __Script Join:__**", value: data[4].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1195891596655337562" && noti_config.mirage) {
+      // mirage alumi
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.mirage });
+      webhook.send({
+        content: ping_role_id.mirage,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Mirage Island" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Mirage Spawn:__**", value: `\`\`\`✅\`\`\`` },
+                { name: "**[⏳] __Server Time:__**", value: data[0].value },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1190570935233814530" && noti_config.mirage) {
+      // mirage xero
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.mirage });
+      webhook.send({
+        content: ping_role_id.mirage,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Mirage Island" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Mirage Spawn:__**", value: `\`\`\`✅\`\`\`` },
+                { name: "**[⏳] __Server Time:__**", value: data[0].value },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1190482703343157408" && noti_config.kitsune) {
+      // kitsune xero
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.kitsune });
+      webhook.send({
+        content: ping_role_id.kitsune,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Kitsune Island" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Kitsune Spawn:__**", value: `\`\`\`✅\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[0].value },
+                { name: "**[🔗] __Job ID:__**", value: data[1].value },
+                { name: "**[📜] __Script Join:__**", value: data[2].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1195389308165685339" && noti_config.kitsune) {
+      // kitsune skyland
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.kitsune });
+      webhook.send({
+        content: ping_role_id.kitsune,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Kitsune Island" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Kitsune Spawn:__**", value: `\`\`\`✅\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[0].value },
+                { name: "**[🔗] __Job ID:__**", value: data[1].value },
+                { name: "**[📜] __Script Join:__**", value: data[2].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1195896995865440267" && noti_config.kitsune) {
+      // kitsune alumi
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.kitsune });
+      webhook.send({
+        content: ping_role_id.kitsune,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Kitsune Island" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Kitsune Spawn:__**", value: `\`\`\`✅\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[0].value },
+                { name: "**[🔗] __Job ID:__**", value: data[1].value },
+                { name: "**[📜] __Script Join:__**", value: data[2].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1195389308165685339" && noti_config.kitsune) {
+      // kitsune skyland
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.kitsune });
+      webhook.send({
+        content: ping_role_id.kitsune,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Kitsune Island" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Kitsune Spawn:__**", value: `\`\`\`✅\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[0].value },
+                { name: "**[📜] __Script Join:__**", value: data[2].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1190581854185721866" && noti_config.fruit_dropped) {
+      // fruit_dropped xero
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.fruit_dropped });
+      webhook.send({
+        content: ping_role_id.fruit_dropped,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(                
+                  "Fruits Spawned | Dropped" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🏝️] __Fruits Spawn | Dropped:__**", value: data[0].value },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    }  else if (channel == "1173796101694955620" && noti_config.haki.legend) {
+      // haki legendary royx
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.haki.legend });
+      webhook.send({
+        content: ping_role_id.haki.legend,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                  "Haki Legendary" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🌈] __Color Haki:__**", value: data[0].value },
+                { name: "**[🌊] __Sea World:__**", value: `\`\`\`3\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1183042706805633055" && noti_config.haki.normal) {
+        // haki hinh nhu la aniie 
+        const data = message.embeds[0].fields;
+        const webhook = new WebhookClient({ url: webhook_config.haki.normal });
+        webhook.send({
+          content: ping_role_id.haki.normal,
+          embeds: [
+            await anime(
+              new EmbedBuilder()
+                .setTitle(
+                    "Haki Normal" +
+                    name_server,
+                )
+                .setURL(invite_discord)
+                .addFields(
+                  { name: "**[🎨] __Color Haki:__**", value: data[0].value },
+                  { name: "**[🌊] __Sea World:__**", value: data[1].value },
+                  { name: "**[👤] __Players In Server:__**", value: data[2].value },
+                  { name: "**[🔗] __Job ID:__**", value: data[3].value },
+                  { name: "**[📜] __Script Join:__**", value: data[4].value },
+                )
+                .setTimestamp(Date.now())
+                .setColor("ffffff")
+                .setFooter({
+                  text: `Created By: @${nameOwner}` + invite_discord,
+                  iconURL: avtOwner,
+                }),
+            ),
+          ],
+        });
+    } else if (channel == "1190483035817255003" && noti_config.haki.normal) {
+      // haki normal xero
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.haki.normal });
+      webhook.send({
+        content: ping_role_id.haki.normal,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                  "Haki Normal" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[🎨] __Color Haki:__**", value: data[0].value },
+                { name: "**[🌊] __Sea World:__**", value: `\`\`\`3\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    }  else if (channel == "1195394713906315304" && noti_config.fullmoon) {
+      // full moon skyland
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.fullmoon });
+      webhook.send({
+        content: ping_role_id.fullmoon,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                "Full Moon" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[⏳] __Status:__**", value: data[0].value },
+                { name: "**[🌗] __Moon Phase:__**", value: data[2].value },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[3].value },
+                { name: "**[📜] __Script Join:__**", value: data[4].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    } else if (channel == "1065645889189855273" && noti_config.fullmoon) {
+      // full moon royx
+      const data = message.embeds[0].fields;
+      const webhook = new WebhookClient({ url: webhook_config.fullmoon });
+      webhook.send({
+        content: ping_role_id.fullmoon,
+        embeds: [
+          await anime(
+            new EmbedBuilder()
+              .setTitle(
+                  "Full Moon" +
+                  name_server,
+              )
+              .setURL(invite_discord)
+              .addFields(
+                { name: "**[⏳] __Status:__**", value: data[0].value },
+                { name: "**[🌗] __Moon Phase:__**", value: `\`\`\`5/5\`\`\`` },
+                { name: "**[👤] __Players In Server:__**", value: data[1].value },
+                { name: "**[🔗] __Job ID:__**", value: data[2].value },
+                { name: "**[📜] __Script Join:__**", value: data[3].value },
+              )
+              .setTimestamp(Date.now())
+              .setColor("ffffff")
+              .setFooter({
+                text: `Created By: @${nameOwner}` + invite_discord,
+                iconURL: avtOwner,
+              }),
+          ),
+        ],
+      });
+    }
+  });
+  
+  client.login(token);
