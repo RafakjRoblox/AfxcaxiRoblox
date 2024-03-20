@@ -41,7 +41,7 @@ webhook_config = {
     legend: "https://discord.com/api/webhooks/1219867193873793054/axqpV5XAAyI9QZMhFqv3jZgwKmepgWeeCsQvKc3YKi7YFFx_lCLUosIjK5hDR8Ksw-Y8", // up r
   },
   fullmoon: "https://discord.com/api/webhooks/1219867301071814678/rS34L56WMPkNO7vYOJ3e9qaYKvrdm_FQovqGsnnFrOLl91LdZd0eUsXl76xi1JnfWTzM", // r
-  kitsune: "",
+  kitsune: "https://discord.com/api/webhooks/1219872237180555294/nbiPR7-hd76eyt3I66-8_TCTADx1hjKytI-0oNFp7i2Y9G1KbfAlz2JWdV_eouCnalLo",
   fruit_dropped: "https://discord.com/api/webhooks/1219868229967810610/KQKfzuzfF61pebU7d6yNoXC3j8VmnxBXEYXnwzUPP9N0FluLD_nzikPX-Ttg85HKS4an",
 };
 
